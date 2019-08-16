@@ -1,0 +1,12 @@
+$primary: darken(#428bca, 20%);
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: lightgray;
+
+    main {
+        width: 80%;
+        overflow: hidden;
+        margin: auto;
+    }
+}
