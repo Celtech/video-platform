@@ -1,12 +1,51 @@
 $primary: darken(#428bca, 20%);
 @import "~bootstrap/scss/bootstrap";
+@import "~video.js/src/css/video-js";
+* {
+    body {
+        header {
+            .autocomplete {
+                position: relative;
+                display: inline-block;
 
-body {
-    background-color: lightgray;
+                .autocomplete-items {
+                    background: #ffffff;
+                    position: absolute;
+                    border: 1px solid #d4d4d4;
+                    border-bottom: none;
+                    border-top: none;
+                    z-index: 99;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
 
-    main {
-        width: 80%;
-        overflow: hidden;
-        margin: auto;
+                    div {
+                        padding: 10px;
+                        cursor: pointer;
+                        background-color: #ffffff;
+                        border-bottom: 1px solid #d4d4d4;
+
+                        img {
+                            width: 32px;
+                            height: 32px;
+                            margin-right: 5px;
+                        }
+
+                        &:hover {
+                            background-color: #e9e9e9;
+                        }
+                    }
+                }
+            }
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: auto;
+        }
+
+        background: $light;
     }
+
+    box-sizing: border-box;
 }

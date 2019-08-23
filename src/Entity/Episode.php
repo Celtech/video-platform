@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,22 @@ class Episode
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deleted_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="episode_id")
+     */
+    private $videos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EpisodeComment", mappedBy="episode")
+     */
+    private $episodeComments;
+
+    public function __construct()
+    {
+        $this->videos = new ArrayCollection();
+        $this->episodeComments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +138,68 @@ class Episode
     public function setDeletedAt(?\DateTimeInterface $deleted_at): self
     {
         $this->deleted_at = $deleted_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setEpisodeId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
+            // set the owning side to null (unless already changed)
+            if ($video->getEpisodeId() === $this) {
+                $video->setEpisodeId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EpisodeComment[]
+     */
+    public function getEpisodeComments(): Collection
+    {
+        return $this->episodeComments;
+    }
+
+    public function addEpisodeComment(EpisodeComment $episodeComment): self
+    {
+        if (!$this->episodeComments->contains($episodeComment)) {
+            $this->episodeComments[] = $episodeComment;
+            $episodeComment->setEpisode($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEpisodeComment(EpisodeComment $episodeComment): self
+    {
+        if ($this->episodeComments->contains($episodeComment)) {
+            $this->episodeComments->removeElement($episodeComment);
+            // set the owning side to null (unless already changed)
+            if ($episodeComment->getEpisode() === $this) {
+                $episodeComment->setEpisode(null);
+            }
+        }
 
         return $this;
     }

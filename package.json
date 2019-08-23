@@ -17,5 +17,11 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "plyr": "^3.5.6",
+        "video.js": "^7.6.0",
+        "videojs-chromecast": "^2.0.8",
+        "videojs-resolution-switcher": "^0.4.2"
     }
 }

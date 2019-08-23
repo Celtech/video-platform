@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Series;
+use Elastica\Query\Fuzzy;
+use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 

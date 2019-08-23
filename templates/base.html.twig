@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+
+    <script src="https://kit.fontawesome.com/40a088ef8a.js"></script>
 </head>
 <body>
-{% include 'components/navbar.html.twig' %}
-<main>
+<header>
+    {% include 'components/navbar.html.twig' %}
+</header>
+<main class="wrapper">
     {% block body %}{% endblock %}
 </main>
-{% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+<footer>
+    <center>
+        <small>My Temporary Footer &copy 2019.</small>
+    </center>
+</footer>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 </html>

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +36,26 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\WatchList", mappedBy="user")
+     */
+    private $watchList;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    public function __construct()
+    {
+        $this->watchList = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -111,5 +133,55 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|WatchList[]
+     */
+    public function getWatchList(): Collection
+    {
+        return $this->watchList;
+    }
+
+    public function addWatchList(WatchList $watchList): self
+    {
+        if (!$this->watchList->contains($watchList)) {
+            $this->watchList[] = $watchList;
+            $watchList->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchList(WatchList $watchList): self
+    {
+        if ($this->watchList->contains($watchList)) {
+            $this->watchList->removeElement($watchList);
+            // set the owning side to null (unless already changed)
+            if ($watchList->getUser() === $this) {
+                $watchList->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
     }
 }
